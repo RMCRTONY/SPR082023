@@ -11,16 +11,20 @@ void OneTwo();
 void OneThree();
 void OneFour();
 void OneFive();
+void OneSix();
+void OneSeven();
 int ValidateIntInput(); // declare method to be used later
 
 int main() 
 {
 	// ********* PLEASE REMEMBER TO UNCOMMENT THE LINES BELOW BEFORE SUBMISSION PLEASE ********
-	//OneOne();
-	//OneTwo();
-	//OneThree();
-	//OneFour();
+	OneOne();
+	OneTwo();
+	OneThree();
+	OneFour();
 	OneFive();
+	OneSix();
+	OneSeven();
 	
 	std::cout << '\n';
 	system("pause"); //this is not a "system-dot-pause" in the slightest, who named it that
@@ -60,7 +64,7 @@ void OneTwo()
 			nmbrz[i] = ValidateIntInput();
 		}
 		
-		std::cin.ignore(INT_MAX, '\n');
+		//std::cin.ignore(INT_MAX, '\n');
 	}
 
 	std::cout << "You entered: ";
@@ -117,10 +121,58 @@ void OneFour()
 void OneFive() 
 {
 	char fullName[32];
-	std::cout << "\nPlease enter your full name: ";
+	std::cout << "Please enter your full name: ";
 	std::cin.getline(fullName, 32);
 	std::cout << "Did you know that there are somewhere between 1 to 9,000,000,000 people named " << fullName << " alive today? \nNeat, right?" 
 		<< "\n\nSource: https://babynames.net/names";  //this fact is only technically true. the source is not real.
+}
+
+void OneSix() 
+{
+	int userAge = 0;
+	std::cout << "\nHow old are you? ";
+	if (!(std::cin >> userAge)) {
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		userAge = ValidateIntInput();
+	}
+
+	if (userAge < 16) {
+		std::cout << "\nApologies, but you do not seem to meet the age requirement. Have a nice day.";
+	}
+	else if (userAge < 18) {
+		std::cout << "\nNearing the meaningless rite-of-passage that is 18, I see."
+			<< "\nI would rather not like to discuss the societal implications of this with you, a minor.";
+	}
+	else if (userAge < 21) {
+		std::cout << "Old enough to be incarcerated and murdered overseas, still not old enough to drink.";
+	}
+	else if (userAge < 35) {
+		std::cout << "I hear if you don't own a Ferrari by now, you are considered to have wasted your prime.";
+	}
+	else if (userAge < 60) {
+		std::cout << "\n........BOO! \n\nOkay, surely you have suffered a heart attack. "
+			<< "\nAn alarm will sound soon to inform passerby that this program is still running. \nOh, and to remove your... corpse or whatever.";
+	}
+	else {
+		std::cout << "I am shocked that the mere sight of technology didn't put you in a coma. \nSlowly, step away from the PC before you hurt yourself.";
+	}
+}
+
+void OneSeven() {
+	int evenNumber;
+	std::cout << "Please provide an even number: ";
+	if (!(std::cin >> evenNumber)) {
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		evenNumber = ValidateIntInput();
+	}
+	if (evenNumber % 2 == 0) {
+		std::cout << "Sick! I love even numbers!";
+	}
+	else {
+		std::cout << "Bruh. That is NOT an even number.";
+	}
 }
 
 int ValidateIntInput()
