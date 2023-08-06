@@ -1,5 +1,6 @@
 #include "Lab2.h"
 #include <iostream>
+#include "Console.h"  //included here because ??????????
 //#include <bitset>
 
 void TurnOn(int bit); // i dont think any of these need to return anything as all they do is mod bitField
@@ -8,67 +9,110 @@ void Toggle(int bit);
 void Negate();
 void LeftShift();
 void RightShift();
+void GetBits(int loopMaster);
 
 int VerifyTrueInt();
 
-unsigned int bitField; // 4 bytes of zeros, currently
+unsigned int bitField = 12; //  currently: 0000 0000 0000 0000 0000 0000 0000 1100 
 
-void main() {
+int main() {
 	int operation;
-	std::cout << "bitField value: " << bitField << "\nBits: " /* << find a way to represent bitField in bits */ ;
-	std::cout << "\nOptions:\n\tTurnOn = 1, TurnOff = 2, Toggle = 3, Negate = 4, Left Shift = 5, Right Shift = 6, Exit = 7\nChoose Operation: ";
-	if (!(std::cin >> operation)) {
-		std::cin.clear();
-		std::cin.ignore(INT_MAX, '\n');
-		operation = VerifyTrueInt();
-	}
-
 	int bitVal;
 	bool inMenu = true;
-	do {
+	while (inMenu) { 
+		//normal menu, displays bits every time
+		std::cout << "bitField value: " << bitField << "\nBits: ";
+		GetBits(32) /* find a way to represent bitField in bits */;
+		std::cout << "\n\tOptions:\n\tTurnOn = 1, TurnOff = 2, Toggle = 3, Negate = 4, Left Shift = 5, Right Shift = 6, Exit = 7\nChoose Operation: ";
+		if (!(std::cin >> operation)) {
+			std::cin.clear();
+			std::cin.ignore(INT_MAX, '\n');
+			operation = VerifyTrueInt();
+		}
+		//menu interface selection switch
 		switch (operation) {
-		case 1:
-			std::cout << "\n";
-		case 2:
-
-		case 3:
-
-		case 4:
-
-		case 5:
-
-		case 6:
-
-		default:
-			std::cout << "\n\t\tExiting...";
+		case 1: //turnOn
+			std::cout << "\nTurnOn\nChoose bit index: ";
+			if (!(std::cin >> bitVal)) {
+				std::cin.clear();
+				std::cin.ignore(INT_MAX, '\n');
+				bitVal = VerifyTrueInt();
+			}
+			TurnOn(bitVal);
+			std::cout << "\nSuccess!\n";
+			break;
+		case 2: //turnOff
+			std::cout << "\nTurnOf\nChoose bit index: ";
+			if (!(std::cin >> bitVal)) {
+				std::cin.clear();
+				std::cin.ignore(INT_MAX, '\n');
+				bitVal = VerifyTrueInt();
+			}
+			TurnOff(bitVal);
+			std::cout << "\nSuccess!\n";
+			break;
+		case 3: //Toggle
+			std::cout << "\nToggle\nChoose bit index: ";
+			if (!(std::cin >> bitVal)) {
+				std::cin.clear();
+				std::cin.ignore(INT_MAX, '\n');
+				bitVal = VerifyTrueInt();
+			}
+			Toggle(bitVal);
+			std::cout << "\nSuccess!\n";
+			break;
+		case 4: //Negate
+			std::cout << "\nNegating...\n";
+			Negate();
+			std::cout << "\nSuccess!\n";
+			break;
+		case 5: //Left shift
+			std::cout << "\nShifting Left...\n";
+			LeftShift();
+			std::cout << "\nSuccess!\n";
+			break;
+		case 6: //Right shift
+			std::cout << "\nShifting Right...\n";
+			RightShift();
+			std::cout << "\nSuccess!\n";
+			break;
+		case 7: //exit
+			std::cout << "\n\t\tExiting...\n";
 			inMenu = false;
 			break;
 		}
-	} while (inMenu = true);
+	} 
+	return 0;
 }
 
 void TurnOn(int bit) {  //parameter variable acts as the actual value in which the bit being turned on lies
-	bitField |= bit;
+	int location = 1 << bit; //bit acts as the location of the bit in question
+	
+	bitField |= location;
 }
 
-void TurnOff(int bit) { //like turn on but reverse
-	bitField &= ~bit;
+void TurnOff(int bit) { //like turn on but reverse		EX: pass in 3
+	int location = 1 << bit;							//	EX: 0000 0000 0000 1000  BitField = 0000 0000 0001 1100
+														//~bit: 1111 1111 1111 0111          &  1111 1111 1111 0111
+	bitField &= ~location;								//										0000 0000 0001 0100
 }
 
 void Toggle(int bit) { //toggles bit in question at value "bit"
-	bitField ^= bit;
+	int location = 1 << bit; 
+
+	bitField ^= location;
 }
 
 void Negate() { //inverts all the bits in the byte
-	~bitField;
+	bitField = ~bitField;
 }
 
 void LeftShift() { //shifts whole bit field left once
-	bitField << 1;
+	bitField = bitField << 1;
 }
 
 void RightShift() { //shifts whole bit field right once
-	bitField >> 1;
+	bitField = bitField >> 1;
 }
 
 int VerifyTrueInt() { //wanted to validate inputs out of fear of screwing the buffer
@@ -82,5 +126,20 @@ int VerifyTrueInt() { //wanted to validate inputs out of fear of screwing the bu
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		if (good) return input;
+	}
+}
+
+void GetBits(int loopMaster) { //loopmaster is the loop control variable.
+	//check if each bit is on. 
+	//print that bit else print 0
+	unsigned int checker = 1 << 31;
+	for (int i = 0; i < loopMaster; i++) {
+		if ((bitField & checker) > 0) { // if the result is greater than 1 then the bit is active
+			std::cout << "1";
+		}
+		else {
+			std::cout << "0";
+		}
+		checker = checker >> 1;
 	}
 }
