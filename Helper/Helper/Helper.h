@@ -7,7 +7,7 @@ namespace Helper {
 	int GetValidatedInt(const char* strMessage, int nMinimumRange = 0, int nMaximumRange = 0); //displays string, validates input, ensures int is within provided range
 	void PurgeCin(); //clears and ignores the input buffer
 	int GetRandNum(int nMinimumRange = 0, int nMaximumRange = 0); //gets random number (possibly within a range)
-	int PrntMenu(std::string* menu);
+	//int PrntMenu(std::string* menu);  
 
 
 	int GetValidatedInt(const char* strMessage, int nMinimumRange, int nMaximumRange) {
@@ -78,7 +78,7 @@ namespace Helper {
 		}
 	}
 
-	int PrntMenu(std::string* menu) {
+	/*int PrntMenu(std::string* menu) {
 		int size = menu->size();
 		for (int i = 0; i < size; i++) {
 			std::cout << i + 1 << ") " << (*menu)[i] << std::endl;
@@ -101,6 +101,8 @@ namespace Helper {
 		}
 
 		return input;
-	}
+	}*/
+
+
 }
  
