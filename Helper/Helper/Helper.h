@@ -8,6 +8,7 @@ namespace Helper {
 	void PurgeCin(); //clears and ignores the input buffer
 	int GetRandNum(int nMinimumRange = 0, int nMaximumRange = 0); //gets random number (possibly within a range)
 	//int PrntMenu(std::string* menu);  
+	void CopyString(const char* source, char*& destination);
 
 
 	int GetValidatedInt(const char* strMessage, int nMinimumRange, int nMaximumRange) {
@@ -103,6 +104,12 @@ namespace Helper {
 		return input;
 	}*/
 
+	void CopyString(const char* source, char*& destination) {
+		delete[] destination;
 
+		size_t len = strlen(source) + 1;
+		destination = new char[len];
+		strcpy_s(destination, len, source);
+	}
 }
  
