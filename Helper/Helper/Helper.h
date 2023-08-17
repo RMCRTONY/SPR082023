@@ -7,7 +7,7 @@ namespace Helper {
 	int GetValidatedInt(const char* strMessage, int nMinimumRange = 0, int nMaximumRange = 0); //displays string, validates input, ensures int is within provided range
 	void PurgeCin(); //clears and ignores the input buffer
 	int GetRandNum(int nMinimumRange = 0, int nMaximumRange = 0); //gets random number (possibly within a range)
-	//int PrntMenu(std::string* menu);  
+	int PrntMenu(const char* menu);  
 	void CopyString(const char* source, char*& destination);
 
 
@@ -79,11 +79,10 @@ namespace Helper {
 		}
 	}
 
-	/*int PrntMenu(std::string* menu) {
-		int size = menu->size();
-		for (int i = 0; i < size; i++) {
-			std::cout << i + 1 << ") " << (*menu)[i] << std::endl;
-		}
+	int PrntMenu(const char* menu) { //simply pass a char array. cout can do the rest
+		
+		std::cout << menu << std::endl;
+		
 
 		int input;
 		bool good = false;
@@ -102,7 +101,7 @@ namespace Helper {
 		}
 
 		return input;
-	}*/
+	}
 
 	void CopyString(const char* source, char*& destination) {
 		delete[] destination;
