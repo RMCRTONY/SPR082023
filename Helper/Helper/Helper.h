@@ -2,13 +2,22 @@
 #include <iostream>
 #include <string>
 
+/*
+* 
+//MEMORY LEAK DETECTOR CODE (goes at the beginning of main):
+_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+_CrtSetBreakAlloc(-1); //set block for memory leak (-1) runs as normal
+_CrtDumpMemoryLeaks();
+*
+*/
+
 namespace Helper {
 
 	int GetValidatedInt(const char* strMessage, int nMinimumRange = 0, int nMaximumRange = 0); //displays string, validates input, ensures int is within provided range
 	void PurgeCin(); //clears and ignores the input buffer
 	int GetRandNum(int nMinimumRange = 0, int nMaximumRange = 0); //gets random number (possibly within a range)
-	int PrntMenu(const char* menu);  
-	void CopyString(const char* source, char*& destination);
+	int PrntMenu(const char* menu);  //prints a menu, asks user for menu selection. returns selection.
+	void CopyString(const char* source, char*& destination); //deep copys a char[]
 
 
 	int GetValidatedInt(const char* strMessage, int nMinimumRange, int nMaximumRange) {
@@ -104,11 +113,12 @@ namespace Helper {
 	}
 
 	void CopyString(const char* source, char*& destination) {
-		delete[] destination;
-
-		size_t len = strlen(source) + 1;
-		destination = new char[len];
-		strcpy_s(destination, len, source);
+		if (destination != nullptr) {
+			delete[] destination; //clear the location
+		}
+		size_t len = strlen(source) + 1; //get length of source
+		destination = new char[len]; //re-allocate appropriate space in destination
+		strcpy_s(destination, len, source); //strcpy does the rest
 	}
 }
  
